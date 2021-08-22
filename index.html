@@ -1,0 +1,458 @@
+<html>
+<head>
+ <meta charset="utf-8" />
+  <title>5小时后更新(QwQe308汉化)-5 hours until the update</title>
+  <script src="break_eternity.js"></script>
+  <script src="saving.js"></script>
+  <script src="ach_and_lore.js"></script>
+  <script src="ach_display.js"></script>
+  <script src="auto_display.js"></script>
+  <script src="auto.js"></script>
+  <script src="challenges.js"></script>
+  <script src="dilation.js"></script>
+  <script src="fill_in.js"></script>
+  <script src="format.js"></script>
+  <script src="get_effect.js"></script>
+  <script src="lonely_info_display.js"></script>
+  <script src="lore_display.js"></script>
+  <script src="main_update_display.js"></script>
+  <script src="patience.js"></script>
+  <script src="tab_display.js"></script>
+  <script src="update.js"></script>
+  <script src="5hours.js"></script>
+</head>
+<body>
+  <span>
+    <button id="main-tab-button" onclick="setTab('main')">主页面</button>
+    <button id="achievements-tab-button" onclick="setTab('achievements')">成就</button>
+    <button id="lore-tab-button" onclick="setTab('lore')">故事</button>
+    <button id="update-tab-button" onclick="setTab('update')" style="display: none;">更新</button>
+    <button id="challenges-tab-button" onclick="setTab('challenges')" style="display: none;">挑战</button>
+    <button id="completion-milestones-tab-button" onclick="setTab('completion-milestones')" style="display: none;">挑战里程碑</button>
+  </span>
+  <div id="main-div" style="display: none;">
+    <table style="table-layout: fixed; width: 1050px;">
+      <tr>
+        <td>开发</td>
+        <td>效率</td>
+        <td>重构</td>
+        <td>招聘</td>
+        <td>耐心</td>
+      </tr>
+      <tr>
+        <td><span id="progress-span-0">0:00:00</span></td>
+        <td><span id="progress-span-1">0:00:00</span></td>
+        <td><span id="progress-span-2">0:00:00</span></td>
+        <td><span id="progress-span-3">0:00:00</span></td>
+        <td><span id="progress-span-4">0:00:00</span></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><span id="effect-span-1"></span> 员工效率</td>
+        <td><span id="effect-span-2"></span> 时间减缓比例</td>
+        <td><span id="effect-span-3"></span> 总员工数<span id="devs-plural"></span></td>
+        <td>使耐心点变为满值所需的总时间变为 <span id="effect-span-4"></span></td>
+      </tr>
+      <tr>
+        <td>员工数: <span id="devs-0"></span><br/><button onclick="addDev(0)">+</button><button onclick="subtractDev(0)">-</button><button onclick="maxDev(0)">最大</button><button onclick="zeroDev(0)">0</button></td>
+        <td>员工数: <span id="devs-1"></span><br/><button onclick="addDev(1)">+</button><button onclick="subtractDev(1)">-</button><button onclick="maxDev(1)">最大</button><button onclick="zeroDev(1)">0</button></td>
+        <td>员工数: <span id="devs-2"></span><br/><button onclick="addDev(2)">+</button><button onclick="subtractDev(2)">-</button><button onclick="maxDev(2)">最大</button><button onclick="zeroDev(2)">0</button></td>
+        <td>员工数: <span id="devs-3"></span><br/><button onclick="addDev(3)">+</button><button onclick="subtractDev(3)">-</button><button onclick="maxDev(3)">最大</button><button onclick="zeroDev(3)">0</button></td>
+        <td>员工数: <span id="devs-4"></span><br/><button onclick="addDev(4)">+</button><button onclick="subtractDev(4)">-</button><button onclick="maxDev(4)">最大</button><button onclick="zeroDev(4)">0</button></td>
+      </tr>
+      <tr id="auto-dev-row">
+        <td>自动员工比例(小数): <input id="auto-dev-0" type="text" onchange="updateAutoDev(0)"></input></td>
+        <td>自动员工比例(小数): <input id="auto-dev-1" type="text" onchange="updateAutoDev(1)"></input></td>
+        <td>自动员工比例(小数): <input id="auto-dev-2" type="text" onchange="updateAutoDev(2)"></input></td>
+        <td>自动员工比例(小数): <input id="auto-dev-3" type="text" onchange="updateAutoDev(3)"></input></td>
+        <td>自动员工比例(小数): <input id="auto-dev-4" type="text" onchange="updateAutoDev(4)"></input></td>
+      </tr>
+    </table>
+    <table style="table-layout: fixed; width: 630px;">
+      <tr>
+        <td>耐心点</td>
+        <td>元效率</td>
+        <td>元重构</td>
+      </tr>
+      <tr>
+        <td><span id="progress-span-7">0.0000</span></td>
+        <td><span id="progress-span-5">0:00:00</span></td>
+        <td><span id="progress-span-6">0:00:00</span></td>
+      </tr>
+      <tr>
+        <td><span id="effect-span-7"></span> (元)效率(^x)和(元)重构(*x)</td>
+        <td><span id="effect-span-5"></span> 额外的效率倍率</td>
+        <td><span id="effect-span-6"></span> 额外的时间减缓比例</td>
+      </tr>
+      <tr>
+        <td><button id="enlightened-button" style="width: 190px; height: 100px; border: 1px solid; background-color: #F02020;" onclick="enlightened()">受到启迪.<br/><span id="enlightened-desc"></span></button></td>
+        <td><button id="prestige-5-button" style="width: 190px; height: 100px; border: 1px solid; background-color: #F02020;" onclick="prestige(5)">重置以获得元效率.<br/><span id="prestige-5"></span></button></td>
+        <td><button id="prestige-6-button" style="width: 190px; height: 100px; border: 1px solid; background-color: #F02020;" onclick="prestige(6)">重置以获得元重构.<br/><span id="prestige-6"></span></button></td>
+      </tr>
+      <tr>
+        <td><button id="update-button" style="width: 190px; height: 100px; border: 1px solid; background-color: #F02020;" onclick="update()">更新.<br/><span id="update-gain"></span></button></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+    <span id="auto-dev-span" style="display: none;">自动分配员工: <input id="auto-dev-on" onclick="toggleAutoOn('dev')" type="checkbox"></input><span id="auto-dev-lonely-info"></span></span>
+    <br/>
+    <span id="auto-enlightened-span" style="display: none;">自动启迪: 当前设置: <button id="auto-enlightened-setting" onclick="nextAutoSetting('enlightened')"></button> 设置值: <input id="auto-enlightened-value" type="text" onchange="updateAutoValue('enlightened')"></input>, 是否开启: <input id="auto-enlightened-on" onclick="toggleAutoOn('enlightened')" type="checkbox"></input></span>
+    <br/>
+    <span id="auto-prestige-span" style="display: none;">
+      自动重置: 当前设置: <button id="auto-prestige-setting" onclick="nextAutoSetting('prestige')"></button> 设置值: <input id="auto-prestige-value" type="text" onchange="updateAutoValue('prestige')"></input>,
+      开始时首先重置的类型: <button id="auto-prestige-initial" onclick="toggleAutoPrestigeInitial()"></button>, 每次重置时切换下次重置的类型: <input id="auto-prestige-alternate" onclick="toggleAutoPrestigeAlternate()" type="checkbox"></input>, 是否开启: <input id="auto-prestige-on" onclick="toggleAutoOn('prestige')" type="checkbox"></input>
+    </span>
+    <br/>
+    <span id="auto-update-span" style="display: none;">自动更新: 当前设置: <button id="auto-update-setting" onclick="nextAutoSetting('update')"></button> 设置值: <input id="auto-update-value" type="text" onchange="updateAutoValue('update')"></input>, 是否开启: <input id="auto-update-on" onclick="toggleAutoOn('update')" type="checkbox"></input></span>
+    <br/>
+    <span id="auto-assign-update-points-span" style="display: none;">自动更新点分配: <input id="auto-assign-update-points-on" onclick="toggleAutoOn('assignUpdatePoints')" type="checkbox"></input></span>
+    <br/>
+    <span id="auto-help-span" style="display: none;">您可以输入秒数或者输入如12:34:56这样格式的时间.</span>
+  </div>
+  <div id="achievements-div" style="display: none;">
+    <span>您获得了 <span id="total-normal-achievements"></span> 普通成就<span id="total-normal-achievements-plural"></span>, 给予 <span id="normal-achievements-effect"></span>x 效率加成, <span id="normal-achievements-patience-effect"></span>x 耐心点获取, and +<span id="normal-achievements-patience-kept-effect"></span>x 启迪时保留的耐心点.</span>
+    <br/>
+    <span>开始游戏: 分配一个员工. <span id="normal-ach-status-0">&#x2718;</span></span>
+    <br/>
+    <span>分配劳动: 每种工作都至少有一个员工在工作. <span id="normal-ach-status-1">&#x2718;</span></span>
+    <br/>
+    <span>我得重新玩?: 重置. <span id="normal-ach-status-2">&#x2718;</span></span>
+    <br/>
+    <span>一段完全应得的休息时间: 在有一小时的所有工作进度之后，让员工休假(指不工作). <span id="normal-ach-status-3">&#x2718;</span></span>
+    <br/>
+    <span>和睦宇宙: 所有工作的进度差不能大于1分钟，同时所有工作的进度必须大于1分钟. <span id="normal-ach-status-4">&#x2718;</span></span>
+    <br/>
+    <span>K-战略家: 在有超过一个员工的情况下让效率大于员工数. <span id="normal-ach-status-5">&#x2718;</span></span>
+    <br/>
+    <span>哇那是成吨的进度(QwQe308:原文Wow,不是我加的语气词>_<): 一次重置中获得大于一小时的新增进度. <span id="normal-ach-status-6">&#x2718;</span></span>
+    <br/>
+    <span>耐心的收益: 启迪. <span id="normal-ach-status-7">&#x2718;</span></span>
+    <br/>
+    <span>5小时过去了: 更新. <span id="normal-ach-status-8">&#x2718;</span></span>
+    <br/>
+    <span>熟练: 每种类型的经验都获得至少一个. <span id="normal-ach-status-9">&#x2718;</span></span>
+    <br/>
+    <span>那可快了!: 一小时内更新.<span id="normal-ach-status-10">&#x2718;</span></span>
+    <br/>
+    <span>长挂纪元: 一次更新获得2更新点. <span id="normal-ach-status-11">&#x2718;</span></span>
+    <br/>
+    <span>它们有没有起作用?: 获得所有更新升级. <span id="normal-ach-status-12">&#x2718;</span></span>
+    <br/>
+    <span>那更快了!!: 一分钟内更新. <span id="normal-ach-status-13">&#x2718;</span></span>
+    <br/>
+    <span>节省代币: 不进行启迪的情况下更新. <span id="normal-ach-status-14">&#x2718;</span></span>
+    <br/>
+    <span>挑战日: 最佳更新时间达到24小时. (奖励：解锁挑战). <span id="normal-ach-status-15">&#x2718;</span></span>
+    <br/>
+    <span>那最快了!!!: 一秒内更新. <span id="normal-ach-status-16">&#x2718;</span></span>
+    <br/>
+    <span>招募许多员工: QwQe308:50,千,懂？. <span id="normal-ach-status-17">&#x2718;</span></span>
+    <br/>
+    <span>那也不是特别难: 对数挑战中更新. <span id="normal-ach-status-18">&#x2718;</span></span>
+    <br/>
+    <span>反挑战: 完成12次挑战. <span id="normal-ach-status-19">&#x2718;</span></span>
+    <br/>
+    <span>反反挑战: 完成20次挑战. <span id="normal-ach-status-20">&#x2718;</span></span>
+    <br/>
+    <span>没有作者的更新: 在没有任何员工工作的情况下，完成更新. <span id="normal-ach-status-21">&#x2718;</span></span>
+    <br/>
+    <span>时间是相对的: 获得膨胀时间. <span id="normal-ach-status-22">&#x2718;</span></span>
+    <br/>
+    <span>时间膨胀是个不错的想法: 获得33.3333膨胀时间. <span id="normal-ach-status-23">&#x2718;</span></span>
+    <br/>
+    <span>五乘八的道路: 40次启迪. <span id="normal-ach-status-24">&#x2718;</span></span>
+    <br/>
+    <span>我们还有观众吗?: 达到十亿员工. <span id="normal-ach-status-25">&#x2718;</span></span>
+    <br/>
+    <span>您可以获得无限的更新点吗?: 一次更新中获得不小于1.80e308的更新点. <span id="normal-ach-status-26">&#x2718;</span></span>
+    <hr/>
+    <span>您拥有 <span id="total-lategame-achievements"></span> 末期成就<span id="total-lategame-achievements-plural"></span>, 给予 <span id="lategame-achievements-patience-effect"></span>x 耐心点获取, <span id="lategame-achievements-completions-effect"></span>x 挑战完成数, and +<span id="lategame-achievements-patience-kept-effect"></span>x 启迪时保留的耐心点.</span>
+    <br/>
+    <span>第一个总是最简单的: 获得所有普通成就. <span id="lategame-ach-status-0">&#x2718;</span></span>
+    <br/>
+    <span>呦, 我听说你挺喜欢更新的(QwQe308:真的不是我在自己加语气词啊>_<我是个正经翻译): 最近十次更新中，每次更新都获得比前一次多1.80e308倍的更新点，同时不能有任何获得0更新点的情况(QwQe308:不是这年头能无更新点更新的？). <span id="lategame-ach-status-1">&#x2718;</span></span>
+    <br/>
+    <span>哇那真的是成吨的进度(不说了;_;): 一次重置获得4383小时的进度. <span id="lategame-ach-status-2">&#x2718;</span></span>
+    <br/>
+    <span>这需要极高的耐心: 提示：10x.(隐藏下这几个成就的条件应该没问题233). <span id="lategame-ach-status-3">&#x2718;</span></span>
+    <br/>
+    <span>一切的答案: 42,猜猜是什么？反正不是和耐心有关的东西. <span id="lategame-ach-status-4">&#x2718;</span></span>
+    <br/>
+    <span>常态相对: 提示：e13. <span id="lategame-ach-status-5">&#x2718;</span></span>
+    <br/>
+    <span>十乘八道路: 我为什么要说成就条件？如果您不瞎应该都知道要求.不过就算不知道，您照样可以正常刷到成就要求. <span id="lategame-ach-status-6">&#x2718;</span></span>
+    <br/>
+    <span>没有积压的工作，没有缺点: 提示：还是e13，猜猜这次是什么？<span id="lategame-ach-status-7">&#x2718;</span></span>
+    <br/>
+    <span>但我不想过劳死!: 提示：63115200秒.为什么我闲得没事干要把时间专门换成秒？？ <span id="lategame-ach-status-8">&#x2718;</span></span>
+    <hr/>
+  </div>
+  <div id="lore-div" style="display: none;">
+  </div>
+  <div id="update-div" style="display: none;">
+    <span>您有 <span id="update-points">0</span> 更新点<span id="update-points-plural"></span>, 同时您更新了<span id="updates">0</span>次<span id="updates-plural"></span> (提供<span id="power-gain-per-experience">0.01</span>能量/(经验*秒数))</span>
+    <br/>
+    <span>您获得了 <span id="additional-devs-due-to-updates"></span> 额外的员工<span id="additional-devs-due-to-updates-plural"></span> (基于更新次数).<span id="additional-devs-due-to-updates-info"></span></span>
+    <table style="table-layout: fixed; width: 980px;">
+      <tr>
+        <td>结局</td>
+        <td>耐心</td>
+        <td>招聘</td>
+      </tr>
+      <tr>
+        <td><span id="update-experience-span-0">0</span> 结局经验</td>
+        <td><span id="update-experience-span-1">0</span> 耐心经验</td>
+        <td><span id="update-experience-span-2">0</span> 招聘经验</td>
+      </tr>
+      <tr>
+        <td><span id="update-power-span-0">0</span> 结局能量</td>
+        <td><span id="update-power-span-1">0</span> 耐心能量</td>
+        <td><span id="update-power-span-2">0</span> 招聘能量</td>
+      </tr>
+      <tr>
+        <td><span id="update-effect-span-0">1</span>x 效率</td>
+        <td><span id="update-effect-span-1">1</span>x 耐心点</td>
+        <td><span id="update-effect-span-2">1</span>x 招聘获得的员工</td>
+      </tr>
+      <tr>
+        <td><button style="width: 310px;" onclick="assignOne(0)">将一点更新点转换为结局经验.</button></td>
+        <td><button style="width: 310px;" onclick="assignOne(1)">将一点更新点转换为耐心经验.</button></td>
+        <td><button style="width: 310px;" onclick="assignOne(2)">将一点更新点转换为招聘经验.</button></td>
+      </tr>
+      <tr>
+        <td><button style="width: 310px;" onclick="assignThird(0)">将三分之一的更新点转换为结局经验.</button></td>
+        <td><button style="width: 310px;" onclick="assignThird(1)">将三分之一的更新点转换为耐心经验.</button></td>
+        <td><button style="width: 310px;" onclick="assignThird(2)">将三分之一的更新点转换为招聘经验.</button></td>
+      </tr>
+      <tr>
+        <td><button style="width: 310px;" onclick="assignAll(0)">将所有更新点转换为结局经验.</button></td>
+        <td><button style="width: 310px;" onclick="assignAll(1)">将所有更新点转换为耐心经验.</button></td>
+        <td><button style="width: 310px;" onclick="assignAll(2)">将所有更新点转换为招聘经验.</button></td>
+      </tr>
+      <tr>
+        <td><button id="up-0-0-button" style="height: 70px; width: 310px; border: 1px solid; background-color: #F02020;" onclick="buyUpdateUpgrade(0, 0)">时间减缓效果在4:30:00后的额外增长更弱.<br/>价格: <span id="up-0-0-cost"></span> 结局经验<span id="up-0-0-bought"></span></button></td>
+        <td><button id="up-0-1-button" style="height: 70px; width: 310px; border: 1px solid; background-color: #F02020;" onclick="buyUpdateUpgrade(0, 1)">耐心对耐心点的加成变得更强.<br/>2.00x 每 00:30:00 变为 2.50x 每 00:30:00<br/>00:01:00 软上限变为 00:00:10 软上限<br/>价格: <span id="up-0-1-cost"></span> 耐心经验<span id="up-0-1-bought"></span></button></td>
+        <td><button id="up-0-2-button" style="height: 70px; width: 310px; border: 1px solid; background-color: #F02020;" onclick="buyUpdateUpgrade(0, 2)">更新后带有10个额外作者，同时解锁自动分配员工.<br/>价格: <span id="up-0-2-cost"></span> 招聘经验<span id="up-0-2-bought"></span></button></td>
+      </tr>
+      <tr>
+        <td><button id="up-1-0-button" style="height: 70px; width: 310px; border: 1px solid; background-color: #F02020;" onclick="buyUpdateUpgrade(1, 0)">加强更新点获取公式<br/>获得10x额外更新点倍率, 2.00x 每 01:00:00更新升级变为 <span id="upgradeless-reward-up-1-0"></span>x 每 01:00:00更新时间<br/>价格: <span id="up-1-0-cost"></span> 结局经验<span id="up-1-0-bought"></span></button></td>
+        <td><button id="up-1-1-button" style="height: 70px; width: 310px; border: 1px solid; background-color: #F02020;" onclick="buyUpdateUpgrade(1, 1)">耐心点能超过1，但此时效果被大幅度削弱(QwQe308:对于长挂来说,建议启迪较多,短挂建议较少,短挂可以控制在10s-15s填满,启迪多的情况下暂时比少的弱,但长挂后更强).<br/>价格: <span id="up-1-1-cost"></span> 耐心经验<span id="up-1-1-bought"></span></button></td>
+        <td><button id="up-1-2-button" style="height: 70px; width: 310px; border: 1px solid; background-color: #F02020;" onclick="buyUpdateUpgrade(1, 2)">所有员工都额外进行“开发”工作.<br/>价格: <span id="up-1-2-cost"></span> 招聘经验<span id="up-1-2-bought"></span></button></td>
+      </tr>
+      <tr id="auto-assign-update-points-row">
+        <td>自动更新点分配比例(小数): <input id="auto-assign-update-points-0" type="text" onchange="updateAutoAssignUpdatePoints(0)"></input></td>
+        <td>自动更新点分配比例(小数): <input id="auto-assign-update-points-1" type="text" onchange="updateAutoAssignUpdatePoints(1)"></input></td>
+        <td>自动更新点分配比例(小数): <input id="auto-assign-update-points-2" type="text" onchange="updateAutoAssignUpdatePoints(2)"></input></td>
+      </tr>
+    </table>
+    <span id="auto-assign-update-points-2-span" style="display: none;">自动分配更新点: <input id="auto-assign-update-points-2-on" onclick="toggleAutoOn('assignUpdatePoints')" type="checkbox"></input></span>
+  </div>
+  <div id="challenges-div" style="display: none;">
+    <span>您完成了 <span id="total-challenge-completions"></span> 次挑战. 您目前在 <span id="current-challenge"></span> 中. <span id="next-challenge-unlock">Next challenge unlocks eventually.</span> <button onclick="exitChallenge()">退出挑战</button></span>
+    <div id="dilation" style="display: none;">
+      <span id="dilation-text"></span>
+      <br/>
+      <button id="dilation-upgrade-0-button" onclick="buyDilationUpgrade(0)"></button>
+    </div>
+    <table style="table-layout: fixed; width: 1100px;">
+      <tr>
+        <td id="logarithmic-td" style="display: none;">
+          <button id="logarithmic-button" style="height: 170px; width: 350px; border: 1px solid; background-color: #F02020;" onclick="enterChallenge('logarithmic')">
+            对数挑战
+            <br/>
+            产量倍率,时间减速比例,员工数被极其严重的降低了,但这些也被挑战完成数加成. 在挑战内达到对应更新时间 (从01:00:00到05:00:00, 每00:30:00)会给予您永久奖励,无论您是否成功完成. 如果您在这个挑战中达到足够高的更新时间 (12:00:00), 您会基于更新时间和挑战完成数获得膨胀时间, 它增幅效率和元效率的e后数字.
+            <br/>
+            目标: <span id="logarithmic-goal"></span> 更新时间
+          </button>
+          <br/>
+          最远达到: <span id="record-development-in-logarithmic"></span>
+          <br/>
+          <span id="logarithmic-reward-description"></span>
+          <br/>
+          <span id="logarithmic-completed-description"></span>
+        </td>
+        <td id="inefficient-td" style="display: none;">
+          <button id="inefficient-button" style="height: 170px; width: 350px; border: 1px solid; background-color: #F02020;" onclick="enterChallenge('inefficient')">
+            反效率
+            <br/>
+            效率和元效率无效.
+            <br/>
+            目标: <span id="inefficient-goal"></span> 更新时间
+          </button>
+          <br/>
+          最远达到: <span id="record-development-in-inefficient"></span>
+          <br/>
+          <span id="inefficient-reward-description"></span>
+          <br/>
+          <br/>
+          <span id="inefficient-completed-description"></span>
+        </td>
+        <td id="ufd-td" style="display: none;">
+          <button id="ufd-button" style="height: 170px; width: 350px; border: 1px solid; background-color: #F02020;" onclick="enterChallenge('ufd')">
+            UFD
+            <br/>
+            重构和元重构无效.
+            <br/>
+            目标: <span id="ufd-goal"></span> 更新时间
+          </button>
+          <br/>
+          最远达到: <span id="record-development-in-ufd"></span>
+          <br/>
+          <span id="ufd-reward-description"></span>
+          <br/>
+          <br/>
+          <span id="ufd-completed-description"></span>
+        </td>
+      </tr>
+      <tr>
+        <td id="lonely-td" style="display: none;">
+          <button id="lonely-button" style="height: 170px; width: 350px; border: 1px solid; background-color: #F02020;" onclick="enterChallenge('lonely')">
+            孤独
+            <br/>
+            独自一人.(屑挑战)
+            <br/>
+            目标: <span id="lonely-goal"></span> 更新时间
+          </button>
+          <br/>
+          最远达到: <span id="record-development-in-lonely"></span>
+          <br/>
+          <span id="lonely-reward-description"></span>
+          <br/>
+          <span id="lonely-completed-description"></span>
+        </td>
+        <td id="impatient-td" style="display: none;">
+          <button id="impatient-button" style="height: 170px; width: 350px; border: 1px solid; background-color: #F02020;" onclick="enterChallenge('impatient')">
+            浮躁
+            <br/>
+            耐心点强制为0.
+            <br/>
+            目标: <span id="impatient-goal"></span> 更新时间
+          </button>
+          <br/>
+          最远达到: <span id="record-development-in-impatient"></span>
+          <br/>
+          <span id="impatient-reward-description"></span>
+          <br/>
+          <span id="impatient-completed-description"></span>
+        </td>
+        <td id="unprestigious-td" style="display: none;">
+          <button id="unprestigious-button" style="height: 170px; width: 350px; border: 1px solid; background-color: #F02020;" onclick="enterChallenge('unprestigious')">
+            反重置
+            <br/>
+            您不能重置.(即不能元效率和元重构)
+            <br/>
+            目标: <span id="unprestigious-goal"></span> 更新时间
+          </button>
+          <br/>
+          最远达到: <span id="record-development-in-unprestigious"></span>
+          <br/>
+          <span id="unprestigious-reward-description"></span>
+          <br/>
+          <span id="unprestigious-completed-description"></span>
+        </td>
+      </tr>
+      <tr>
+        <td id="slow-td" style="display: none;">
+          <button id="slow-button" style="height: 170px; width: 350px; border: 1px solid; background-color: #F02020;" onclick="enterChallenge('slow')">
+            缓慢
+            <br/>
+            所有东西减速1000倍.所有.
+            <br/>
+            目标: <span id="slow-goal"></span> 更新时间
+          </button>
+          <br/>
+          最远达到: <span id="record-development-in-slow"></span>
+          <br/>
+          <span id="slow-reward-description"></span>
+          <br/>
+          <span id="slow-completed-description"></span>
+        </td>
+        <td id="powerless-td" style="display: none;">
+          <button id="powerless-button" style="height: 170px; width: 350px; border: 1px solid; background-color: #F02020;" onclick="enterChallenge('powerless')">
+            无力
+            <br/>
+            没有能量.懂？
+            <br/>
+            目标: <span id="powerless-goal"></span> 更新时间
+          </button>
+          <br/>
+          最远达到: <span id="record-development-in-powerless"></span>
+          <br/>
+          <span id="powerless-reward-description"></span>
+          <br/>
+          <br/>
+          <span id="powerless-completed-description"></span>
+        </td>
+        <td id="upgradeless-td" style="display: none;">
+          <button id="upgradeless-button" style="height: 170px; width: 350px; border: 1px solid; background-color: #F02020;" onclick="enterChallenge('upgradeless')">
+            反升级
+            <br/>
+            升级无效.
+            <br/>
+            目标: <span id="upgradeless-goal"></span> 更新时间
+          </button>
+          <br/>
+          最远达到: <span id="record-development-in-upgradeless"></span>
+          <br/>
+          <span id="upgradeless-reward-description"></span>
+          <br/>
+          <br/>
+          <span id="upgradeless-completed-description"></span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="completion-milestones-div" style="display: none;">
+    <span>您完成了 <span id="total-challenge-completions-milestone-tab"></span> 次挑战.</span>
+    <br/>
+    <span>2次: 自动启迪. <span id="milestone-status-0">&#x2718;</span></span>
+    <br/>
+    <span>4次: 自动重置. <span id="milestone-status-1">&#x2718;</span></span>
+    <br/>
+    <span>8次: 自动更新. <span id="milestone-status-2">&#x2718;</span></span>
+    <br/>
+    <span>16次: 自动分配更新点. <span id="milestone-status-3">&#x2718;</span></span>
+    <br/>
+    <span>32次: 您的员工以1%的效率进行所有工作,无论他们在干什么. <span id="milestone-status-4">&#x2718;</span></span>
+    <hr/>
+  </div>
+  <span>其他信息: <span id="progress-milestones"></span> 更新里程碑<span id="progress-milestones-plural"></span> (每半小时更新时间一个) <span id="progress-milestones-to-be"></span> 给予 <span id="progress-milestones-effect"></span>x 效率,
+  <br/>
+  <span id="record-development"></span> 最高更新时间, <span id="unassigned-devs"></span> 未任职员工<span id="unassigned-devs-plural"></span>, <span id="enlightened"></span> 次<span id="enlightened-plural"></span> 启迪, <span id="last-update-point-gain"></span> 更新点<span id="last-update-point-gain-plural"></span> 上次更新, <span id="game-speed"></span> 游戏速率</span>
+  <br/>
+  <span id="time-since-last-enlightened"></span> 距离上次启迪的时间, <span id="time-since-last-prestige"></span> 距离上次重置的时间, <span id="time-since-last-update"></span> 距离上次更新的时间
+  <br/>
+  <span>
+    重置确认框: <input id="prestige-confirmation" onclick="toggleConfirmation('prestige')" type="checkbox"></input>
+    无奖励重置确认框: <input id="prestige-without-gain-confirmation" onclick="toggleConfirmation('prestigeWithoutGain')" type="checkbox"></input>
+    更新确认框: <input id="update-confirmation" onclick="toggleConfirmation('update')" type="checkbox"></input>
+  </span>
+  <br/>
+  <span>
+    将全部更新点转换为经验确认框: <input id="turn-all-update-points-into-experience-confirmation" onclick="toggleConfirmation('turnAllUpdatePointsIntoExperience')" type="checkbox"></input>
+    进入挑战确认框: <input id="enter-challenge-confirmation" onclick="toggleConfirmation('enterChallenge')" type="checkbox"></input>
+    退出挑战确认框: <input id="exit-challenge-confirmation" onclick="toggleConfirmation('exitChallenge')" type="checkbox"></input>
+  </span>
+  <br/>
+  <span>
+    进入或退出挑战时进行一次更新: <input id="update-challenge" onclick="toggleOption('updateChallenge')" type="checkbox"></input>
+    离线进度: <input id="offline-progress" onclick="toggleOption('offlineProgress')" type="checkbox"></input>
+  </span>
+  <br/>
+  <span><span id="hard-mode-span">困难模式: 关闭</span> <button onclick="toggleHardMode()">调节模式</button></span>
+  <br/>
+  <span><button onclick="saveGame()">Save</button> <button onclick="exportGame()">导出</button> <button onclick="loadGamePrompt()">导入</button> <button onclick="resetGameWithConfirmation()">硬重置</button></span>
+  <br/>
+  <span style="display: none;">已导出存档(同时也复制到剪切板中): <input id="export-output"></input></span>
+  <br/>
+  <!--
+  <span>This is the only official version of "5 hours until the update".</span>
+  -->
+</body>
+</html>
+<!--客服 开始-->
+<script src="//likexia.gitee.io/game/js/jquery.min.js"></script>
+<link rel="stylesheet" href="//likexia.gitee.io/game/css/kf.css" type="text/css" media="screen" charset="utf-8">
+<script src="//likexia.gitee.io/game/js/kf.js"></script>
+<!-- 客服 结束 -->
