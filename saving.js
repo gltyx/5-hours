@@ -1,6 +1,6 @@
 function loadGame(s, offlineProgress) {
   // offlineProgress = null means leave it up to the save.
-  player = JSON.parse(atob(s));
+  player = JSON.parse(LZString.decompressFromBase64(s));
   if (offlineProgress === null) {
     offlineProgress = player.options.offlineProgress;
   }
@@ -228,14 +228,14 @@ function loadGamePrompt() {
 }
 
 function saveGame () {
-  localStorage.setItem('5hours-save', btoa(JSON.stringify(player)))
+  localStorage.setItem('5hours-save', LZString.compressToBase64(JSON.stringify(player)))
 }
 
 function exportGame () {
   let output = document.getElementById('export-output');
   let parent = output.parentElement;
   parent.style.display = "";
-  output.value = btoa(JSON.stringify(player));
+  output.value = LZString.compressToBase64(JSON.stringify(player));
   output.focus();
   output.select();
   try {
