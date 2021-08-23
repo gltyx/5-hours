@@ -1,6 +1,8 @@
 function loadGame(s, offlineProgress) {
   // offlineProgress = null means leave it up to the save.
-  player = JSON.parse(LZString.decompressFromBase64(s));
+  var a = LZString.decompressFromBase64(s)
+  if(a!=null) player = JSON.parse(a);
+  else player = {}
   if (offlineProgress === null) {
     offlineProgress = player.options.offlineProgress;
   }
@@ -105,13 +107,13 @@ function fixPlayer () {
   }
   if (!('enlightened' in player.auto)) {
     player.auto.enlightened = {
-      setting: 'total times enlightened',
+      setting: '启迪次数',
       value: new Decimal(0),
       displayValue: '0',
       on: false
     };
     player.auto.prestige = {
-      setting: 'development',
+      setting: '新增更新时间',
       value: new Decimal(0),
       displayValue: '0',
       initial: 5,
@@ -119,7 +121,7 @@ function fixPlayer () {
       on: false
     };
     player.auto.update = {
-      setting: 'development',
+      setting: '更新时间',
       value: new Decimal(0),
       displayValue: '0',
       on: false
@@ -261,13 +263,13 @@ let initialPlayer = {
       on: false
     },
     enlightened: {
-      setting: 'total times enlightened',
+      setting: '启迪次数',
       value: new Decimal(0),
       displayValue: '0',
       on: false
     },
     prestige: {
-      setting: 'development',
+      setting: '新增更新时间',
       value: new Decimal(0),
       displayValue: '0',
       initial: 5,
@@ -275,7 +277,7 @@ let initialPlayer = {
       on: false
     },
     update: {
-      setting: 'development',
+      setting: '更新时间',
       value: new Decimal(0),
       displayValue: '0',
       on: false
@@ -350,7 +352,7 @@ let initialPlayer = {
 function resetGame() {
   // The false here sets Date.now() to when the game was reset
   // rather than when the window was loaded.
-  loadGame(btoa(JSON.stringify(initialPlayer)), false);
+  loadGame(LZString.compressToBase64(JSON.stringify(initialPlayer)), false);
 }
 
 function resetGameWithConfirmation() {

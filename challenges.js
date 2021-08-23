@@ -59,7 +59,7 @@ function challengeReward(x) {
 
 function describeChallengeReward(x) {
   if (x === 'logarithmic') {
-    return getPermaEnlightened() + '次永久启迪' + <br/>耐心点启迪时减速 ' + format(getEnlightenedSlowFactor()) + 'x.';
+    return getPermaEnlightened() + '次永久启迪' + "<br/>耐心点启迪时改为减速"  + format(getEnlightenedSlowFactor()) + 'x.';
   } else {
     let table = {
       'inefficient': x => format(x) + 'x 效率',
