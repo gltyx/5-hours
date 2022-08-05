@@ -210,7 +210,7 @@ function loadGameStorage () {
       // We're loading from storage, player.options.offlineProgress isn't set yet.
       loadGame(localStorage.getItem('5hours-save'), null);
     } catch (ex) {
-      console.log('Exception while loading game, please report this.', ex);
+      console.log('加载的时候报错了,请反馈这件事.', ex);
       resetGame();
     }
   }
@@ -218,14 +218,14 @@ function loadGameStorage () {
 
 function loadGamePrompt() {
   try {
-    let save = prompt('Enter your save:');
+    let save = prompt('输入你的存档(注意:汉化版与原版存档并不共通):');
     if (save && !(/^\s+$/.test(save))) {
       loadGame(save, player.options.offlineProgress);
     } else if (save !== null) {
-      alert('The save you entered appears to be empty.');
+      alert('你似乎输入了一个空的存档.');
     }
   } catch(ex) {
-    alert('The save you entered does not seem to be valid. The error was ' + ex);
+    alert('你似乎输入了一个错误的存档.报错信息是: ' + ex);
   }
 }
 
@@ -243,7 +243,7 @@ function exportGame () {
   try {
     document.execCommand('copy');
   } catch(ex) {
-    alert('Copying to clipboard failed.');
+    alert('复制到剪切板这一操作似乎失败了.');
   }
 }
 
@@ -356,7 +356,7 @@ function resetGame() {
 }
 
 function resetGameWithConfirmation() {
-  if (confirm('Do you really want to reset the game? You will lose all your progress, and get no benefit.')) {
+  if (confirm('你真的想要硬重置吗? 所有东西都会被重置,并且你不会因此获得任何加成.')) {
     resetGame();
   }
 }
